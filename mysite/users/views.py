@@ -42,8 +42,8 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 @login_required
-def profile_detail(request, pk):
+def profileDetail(request, pk):
     context = {
-        'profile': get_object_or_404(Profile, pk=pk)
+        'user': get_object_or_404(User, pk=pk)
     }
     return render(request, 'users/user_detail.html', context)
