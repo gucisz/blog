@@ -9,8 +9,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView
 from django.db.models import Q
-from django_searchbar.utils import SearchBar
-from django_searchbar.mixins import SearchBarViewMixin
+
 
 
 
@@ -19,6 +18,7 @@ from django_searchbar.mixins import SearchBarViewMixin
 def home(request):
     context = {
         'posts': Post.objects.all(),
+        'user_posts': "active",
     }
 
     return render(request, 'blog/home.html', context)
@@ -47,6 +47,8 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -130,7 +132,7 @@ class SearchResultsView(ListView):
             messages.warning(self.request, self.success_message)
 
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+    return render(request, 'blog/about.html', {'title': 'About', 'blog_about': "active"})
 
 
 @login_required

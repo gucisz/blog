@@ -5,8 +5,9 @@
         <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="mr-2" href="{% url 'user_posts' post.author.username %}">{{ post.author }}</a>
+                <a class="mr-2" href="{% url 'user_detail' pk=post.author.pk %}">{{ post.author }}</a>
                 <small class="text-muted">{{ post.date_posted|date:"d F, Y" }}</small>
+                <a class="mr-2 float-right" href="{% url 'user_posts' post.author.username %}">All user's posts</a>
             </div>
             <h2><a class="article-title" href="{%url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>

@@ -1,7 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import Profile
 
 
 def register(request):
@@ -14,7 +18,7 @@ def register(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form })
+    return render(request, 'users/register.html', {'form': form, 'register': "active" })
 
 @login_required
 def profile(request):
@@ -32,6 +36,14 @@ def profile(request):
 
     context ={
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'profile': "active"
     }
     return render(request, 'users/profile.html', context)
+
+@login_required
+def profile_detail(request, pk):
+    context = {
+        'profile': get_object_or_404(Profile, pk=pk)
+    }
+    return render(request, 'users/user_detail.html', context)
