@@ -3,17 +3,21 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.models import User
 from .models import Post, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import CommentForm
+from .forms import CommentForm, ContactForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView
 from django.db.models import Q
-
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
+from mysite.settings import EMAIL_HOST_USER
 
 
 
 # Create your views here.
+
+
 
 def home(request):
     context = {
@@ -133,6 +137,26 @@ class SearchResultsView(ListView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About', 'blog_about': "active"})
+
+def aboutUs(request):
+    return render(request, 'blog/about_us.html', {'title': 'AboutUs', 'blog_aboutus': "active"})
+
+def contactView(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            from_email = form.cleaned_data['from_email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message,from_email, [EMAIL_HOST_USER])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            messages.success(request, f'Thank You Your message was sent')
+            return redirect('blog-home')
+    return render(request, "blog/contact.html", {'form': form})
 
 
 @login_required

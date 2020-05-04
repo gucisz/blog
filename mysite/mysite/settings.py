@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
 ]
 
 MIDDLEWARE = [
@@ -128,6 +131,8 @@ MEDIA_URL = '/media/'
 #ustawienia CRISPY na styl bootstrap4
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+ACCOUNT_SIGNUP_FORM_CLASS = "users.forms.UserRegisterForm"
+
 #przekierowanie na strone główną po zalogowaniu
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
@@ -140,3 +145,6 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+ACCOUNT_APPROVAL_REQUIRED = True
+

@@ -17,8 +17,11 @@ urlpatterns = [
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('search/', SearchResultsView.as_view(), name='search_results'),
     path('comment/<int:pk>/delete', CommentDeleteView.as_view(), name='comment_remove'),
+    path('contact/', views.contactView, name='contact'),
+
 
 
 
     path('about/', views.about, name='blog_about'),
+    path('aboutus/', views.aboutUs, name='blog_aboutus'),
 ]

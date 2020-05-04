@@ -40,6 +40,9 @@ ul {
   border-radius: 3px;
   margin-bottom: 20px;
 }
+.content-section:hover{
+    background: #eeeeee;
+}
 
 .article-title {
   color: #444444;
